@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HGLabor Player Stats im Canvas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"> <!-- Verweis auf externe CSS-Datei -->
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">HGLabor Player Stats</h1>
+    <p id="infoText">Gib den Gamemode und die Player ID ein, um die Spielerstatistiken abzurufen.</p>
+    
+    <!-- Das Formular zum Abrufen der Daten -->
+    <div id="fetchForm">
+      <label for="gamemode">Gamemode:</label>
+      <select id="gamemode">
+        <option value="ffa" selected>FFA</option>
+        <option value="placeholder">Platzhalter</option>
+      </select>
+      
+      <label for="playerId">Player ID:</label>
+      <input type="text" id="playerId" placeholder="Minecraft UUID" 
+             value="26a4fcde-de39-4ff0-8ea1-786582b7d8ee">
+      
+      <button id="fetchData">Daten abrufen</button>
+    </div>
+    
+    <!-- Das Canvas, in dem die Statistiken gezeichnet werden -->
+    <div id="statsContainer" class="stats-container" style="display: none;">
+      <h2 class="stats-heading">Spielerstatistiken</h2>
+      <div id="playerStats" class="player-stats"></div> <!-- Spielerstatistiken -->
+      <div id="heroStatsContainer" class="hero-stats-container"></div> <!-- Heldenstatistiken -->
+    </div>
+    <canvas id="statsCanvas" width="1000" height="600"></canvas>
+  </div>
+
+  <script src="script.js"></script> <!-- Verweis auf externe JavaScript-Datei -->
+</body>
+</html>

@@ -1,0 +1,303 @@
+/* Grundlegende Farbvariablen */
+:root {
+    --primary-color: #00afe8;
+    --secondary-color: #00afe8;
+    --primary-color-text-shadow: #094f86;
+    --secondary-color-text-shadow: #094f86;
+    --hover-color: #e1d1a9;
+    --hover-color-text-shadow: #4f4732;
+    --background-color: #F8F8F8;
+    --background-contrast-color: #e7e7e7;
+    --font-color: #161616;
+    --font-color-text-shadow: #d0d0d0;
+    --blackbar-contrast: #555555;
+    --blackbar-contrast-bright: #bebebe;
+    transition: background-color .2s;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+/* Grundlegende Stile für die gesamte Seite */
+* {
+    font-family: 'Pixelify Sans', sans-serif; /* Schriftart Pixelify Sans */
+    color: var(--font-color);
+    text-shadow: 2px 2px var(--font-color-text-shadow);
+    font-size: 18px;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--font-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Die gesamte Seite wird vertikal zentriert */
+    background-image: url('https://example.com/pokemon-background.png'); /* Hintergrundbild, z.B. Pokémon */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Container-Stile */
+.container {
+    background: rgba(255, 255, 255, 0.8); /* Leicht durchsichtiger Hintergrund */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+/* Überschrift-Stile mit Schimmereffekt */
+h1 {
+    color: var(--primary-color); /* Primärfarbe für den Text */
+    font-size: 48px; /* Große Schriftgröße */
+    text-shadow: 
+        0 0 5px rgba(255, 255, 255, 0.6), 
+        0 0 10px rgba(255, 255, 255, 0.5), 
+        0 0 15px rgba(255, 255, 255, 0.4),
+        0 0 20px var(--primary-color),
+        0 0 25px var(--primary-color), 
+        0 0 30px var(--primary-color);
+    text-transform: uppercase; /* Alles in Großbuchstaben */
+    letter-spacing: 2px; /* Abstand zwischen den Buchstaben */
+    animation: shimmer 2s infinite alternate; /* Glanzanimation */
+}
+
+/* Animation für den Schimmereffekt */
+@keyframes shimmer {
+    0% {
+        text-shadow: 
+            0 0 5px rgba(255, 255, 255, 0.6), 
+            0 0 10px rgba(255, 255, 255, 0.5), 
+            0 0 15px rgba(255, 255, 255, 0.4),
+            0 0 20px var(--primary-color),
+            0 0 25px var(--primary-color), 
+            0 0 30px var(--primary-color);
+    }
+    50% {
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.8), 
+            0 0 20px rgba(255, 255, 255, 0.7), 
+            0 0 30px rgba(255, 255, 255, 0.6),
+            0 0 40px var(--primary-color),
+            0 0 50px var(--primary-color), 
+            0 0 60px var(--primary-color);
+    }
+    100% {
+        text-shadow: 
+            0 0 5px rgba(255, 255, 255, 0.6), 
+            0 0 10px rgba(255, 255, 255, 0.5), 
+            0 0 15px rgba(255, 255, 255, 0.4),
+            0 0 20px var(--primary-color),
+            0 0 25px var(--primary-color), 
+            0 0 30px var(--primary-color);
+    }
+}
+
+/* Formularfelder und Button-Stile */
+label, p {
+    color: var(--font-color);
+    font-size: 16px;
+}
+
+select, input, button {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 2px solid var(--primary-color);
+    background-color: #fff;
+    color: var(--font-color);
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: var(--primary-color); /* Primärfarbe */
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover-Effekt für Button */
+button:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.05); /* Kleiner Zoom-Effekt */
+    text-shadow: 2px 2px var(--hover-color-text-shadow); /* Textschatten beim Hover */
+}
+
+/* Canvas-Stile */
+canvas {
+    background-color: #fff;
+    border: 2px solid var(--primary-color);
+    margin-top: 20px;
+    max-width: 100%;
+    display: none; /* Anfangs versteckt */
+    border-radius: 8px;
+}
+
+/* Eingabefelder im Fokus */
+input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px rgba(0, 175, 232, 0.6); /* Sekundärfarbe für den Fokus-Effekt */
+}
+
+/* Weitere Anpassungen für das Pokémon-Thema */
+#stats {
+    font-size: 18px;
+    color: var(--font-color);
+}
+
+#stats p {
+    margin: 10px 0;
+    color: var(--font-color);
+}
+
+#stats h3 {
+    font-size: 24px;
+    margin-top: 30px;
+    color: var(--primary-color);
+}
+
+/* Kleine Animationen für ein verspieltes Gefühl */
+@keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.pokemon-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+}
+
+/* Entfernen der Standard-Scrollbars */
+@media screen and (min-width: 1024px) {
+    *::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Überarbeiteter Stil für die Statistiken */
+canvas {
+    background-color: #fff;
+    border: 2px solid var(--primary-color);
+    margin-top: 20px;
+    max-width: 100%;
+    display: none; /* Anfangs versteckt */
+    border-radius: 8px;
+}
+
+/* Statistiken Container */
+.stats-container {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.9); /* Weißer Hintergrund mit Transparenz */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Leichter Schatten */
+    display: block; /* Sicherstellen, dass es sichtbar ist */
+}
+
+/* Überschrift für Statistiken */
+h2.stats-heading {
+    font-size: 28px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Abschnitt für allgemeine Spielerstatistiken */
+.player-stats {
+    background-color: var(--background-contrast-color); /* Sanfter Kontrast */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Dezenter Schatten */
+}
+
+.player-stats p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: var(--font-color);
+}
+
+.player-stats .label {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Grundlayout für die Heldenstatistiken */
+.hero-box {
+    background-color: #f3f3f3;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+    max-height: 33px; /* Eingeklappt mit kleiner Höhe */
+}
+
+.hero-box.open {
+    max-height: 900px; /* Ausgeklappt mit größerer Höhe */
+}
+
+.hero-name {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+    background-color: #00afe8;
+    color: white;
+    border-radius: 3px;
+}
+
+.hero-ability {
+    padding: 5px 0;
+    color: #333;
+}
+
+.hero-ability-detail {
+    padding-left: 20px;
+    font-style: italic;
+    color: #777;
+}
+
+.hero-box .hero-name:hover {
+    background-color: #094f86; /* Hover-Effekt für den Namen */
+}
+
+/* Stil für das eingeklappt/ausgeklappt Symbol */
+.hero-name::after {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.hero-box.open .hero-name::after {
+    transform: rotate(180deg); /* Pfeil dreht sich, wenn der Inhalt aufgeklappt wird */
+}
+
+/* Responsive Design für mobile Geräte */
+@media screen and (max-width: 768px) {
+    .hero-box {
+        width: calc(50% - 20px); /* Auf 2 Helden pro Reihe aufgeteilt */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-box {
+        width: 100%; /* Auf 1 Held pro Reihe */
+    }
+}
