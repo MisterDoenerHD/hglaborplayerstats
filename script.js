@@ -1,6 +1,21 @@
+// Funktion, um den Minecraft-Namen in eine UUID umzuwandeln
+async function getUUID(playerIdentifier) {
+    const url = `https://api.ashcon.app/mojang/v2/user/${playerIdentifier}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.uuid; // Gibt die UUID des Spielers zurück
+    } catch (error) {
+        console.error("Fehler beim Abrufen der UUID:", error);
+        return playerIdentifier; // Falls es ein Fehler gibt, wird der ursprüngliche Wert zurückgegeben
+    }
+}
+
 // Funktion, die die Statistiken im Canvas zeichnet
 function drawStats(data) {
-    // Spielerstatistiken anzeigen
     const playerStats = document.getElementById("playerStats");
     playerStats.innerHTML = `
       <p><span class="label">Spieler ID:</span> ${data.playerId}</p>
@@ -12,37 +27,28 @@ function drawStats(data) {
       <p><span class="label">Bounty:</span> ${data.bounty}</p>
     `;
 
-    // Heldenstatistiken dynamisch erstellen
     const heroStatsContainer = document.getElementById("heroStatsContainer");
-    heroStatsContainer.innerHTML = ''; // Leere den Container
-
+    heroStatsContainer.innerHTML = '';
+    
     const heroes = Object.keys(data.heroes);
     heroes.forEach(hero => {
         const heroBox = document.createElement("div");
         heroBox.classList.add("hero-box");
-
+        
         const heroName = document.createElement("div");
         heroName.classList.add("hero-name");
         heroName.textContent = hero.charAt(0).toUpperCase() + hero.slice(1);
-
+        
         heroBox.appendChild(heroName);
-
-        // Stil für das eingeklappt/ausgeklappt Symbol (Pfeil hinzufügen)
+        
         const arrowIcon = document.createElement("span");
         arrowIcon.textContent = " ▼";
         arrowIcon.classList.add("arrow-icon");
         heroName.appendChild(arrowIcon);
-
-        // Event-Listener für das Aufklappen der Heldenstatistik
+        
         heroName.addEventListener("click", function() {
             heroBox.classList.toggle("open");
-
-            // Drehen des Pfeils basierend auf dem Zustand der Box
-            if (heroBox.classList.contains("open")) {
-                arrowIcon.textContent = " ▲";  // Pfeil nach oben
-            } else {
-                arrowIcon.textContent = " ▼";  // Pfeil nach unten
-            }
+            arrowIcon.textContent = heroBox.classList.contains("open") ? " ▲" : " ▼";
         });
 
         const abilities = data.heroes[hero];
@@ -50,7 +56,6 @@ function drawStats(data) {
             const abilityElement = document.createElement("div");
             abilityElement.classList.add("hero-ability");
             abilityElement.textContent = ability.replace(/_/g, ' ');
-
             heroBox.appendChild(abilityElement);
 
             const details = abilities[ability];
@@ -58,7 +63,6 @@ function drawStats(data) {
                 const detailElement = document.createElement("div");
                 detailElement.classList.add("hero-ability-detail");
                 detailElement.innerHTML = `${detail.replace(/_/g, ' ')}: <span>${details[detail].experiencePoints} XP</span>`;
-
                 heroBox.appendChild(detailElement);
             });
         });
@@ -66,23 +70,22 @@ function drawStats(data) {
         heroStatsContainer.appendChild(heroBox);
     });
 
-    // Das Form zum Abrufen der Daten ausblenden
     document.getElementById("fetchForm").style.display = 'none';
-    // Das Container mit den Statistiken anzeigen
     document.getElementById("statsContainer").style.display = 'block';
 }
 
 // Daten abrufen
-document.getElementById("fetchData").addEventListener("click", function() {
+document.getElementById("fetchData").addEventListener("click", async function() {
     const gamemode = document.getElementById("gamemode").value;
-    const playerId = document.getElementById("playerId").value.trim();
+    let playerIdentifier = document.getElementById("playerId").value.trim();
 
-    if (!gamemode || !playerId) {
-        alert("Bitte Gamemode und Player ID angeben.");
+    if (!gamemode || !playerIdentifier) {
+        alert("Bitte Gamemode und Player ID/Namen angeben.");
         return;
     }
 
-    const url = `https://api.hglabor.de/stats/${encodeURIComponent(gamemode)}/${encodeURIComponent(playerId)}`;
+    const playerUUID = await getUUID(playerIdentifier);
+    const url = `https://api.hglabor.de/stats/${encodeURIComponent(gamemode)}/${encodeURIComponent(playerUUID)}`;
 
     fetch(url, {
         method: "GET",
@@ -90,7 +93,7 @@ document.getElementById("fetchData").addEventListener("click", function() {
     })
     .then(response => response.json())
     .then(data => {
-        drawStats(data);  // Aufruf der überarbeiteten Funktion
+        drawStats(data);
     })
     .catch(error => {
         console.error("API-Fehler:", error);
